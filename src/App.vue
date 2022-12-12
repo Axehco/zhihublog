@@ -5,7 +5,8 @@
     <form>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
-        <ValidateInput :rules="emailRules"></ValidateInput>
+        <ValidateInput :rules="emailRules" v-model="emailVal"></ValidateInput>
+        {{emailVal}}
         <!-- <input type="email" class="form-control" id="exampleInputEmail1" v-model="emailRef.val" @blur="validateEmail">
         <div class="form-text" v-if="emailRef.error">{{ emailRef.message }}</div> -->
       </div>
@@ -19,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 // import ColumnList, { ColumnProps } from './components/ColumnList.vue'
@@ -70,6 +71,8 @@ export default defineComponent({
     ValidateInput
   },
   setup () {
+    // 创建这个变量为了临时调试 ValidateInput 组件的自定义组件传值
+    const emailVal = ref('viking')
     const emailRules: RulesProp = [
       { type: 'required', message: '电子邮箱地址不能为空' },
       { type: 'email', message: '请输入正确的电子邮箱格式' }
@@ -93,7 +96,8 @@ export default defineComponent({
       user: currentUser,
       emailRef,
       validateEmail,
-      emailRules
+      emailRules,
+      emailVal
     }
   }
 })
